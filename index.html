@@ -26,7 +26,7 @@
             --card-border: #E8DCC8;
         }
 
-        /* === 通用設定 (RWD 基礎) === */
+        /* === 通用設定 === */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
         html, body {
@@ -46,6 +46,9 @@
             position: relative;
             color: var(--text-brown);
             padding-bottom: 40px;
+            
+            /* 關鍵修正：增加頂部留白，讓耳朵有空間顯示 */
+            padding-top: 35px; 
         }
         
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 249, 229, 0.94); z-index: -1; }
@@ -72,18 +75,10 @@
             background-size: 100% 220px; background-repeat: no-repeat;
             filter: drop-shadow(0 4px 5px rgba(137, 207, 240, 0.3)); z-index: 0;
         }
-        .hachi-head-bg::before, .hachi-head-bg::after { 
-            content: ''; 
-            position: absolute; 
-            top: 50%; /* 修改為置中 */
-            width: 50px; 
-            height: 60px; 
-            background: var(--hachi-blue); 
-            border: 5px solid white; 
-            border-radius: 30px 30px 0 0; 
-        }
-        .hachi-head-bg::before { left: 15%; transform: translateY(-50%) rotate(-15deg); /* 增加垂直置中 */ }
-        .hachi-head-bg::after { right: 15%; transform: translateY(-50%) rotate(15deg); /* 增加垂直置中 */ }
+        /* 耳朵位置微調 */
+        .hachi-head-bg::before, .hachi-head-bg::after { content: ''; position: absolute; top: -30px; width: 50px; height: 60px; background: var(--hachi-blue); border: 5px solid white; border-radius: 30px 30px 0 0; }
+        .hachi-head-bg::before { left: 15%; transform: rotate(-15deg); }
+        .hachi-head-bg::after { right: 15%; transform: rotate(15deg); }
 
         .status-bar-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 25px; height: 100%; pointer-events: auto; }
         .location-pill, .update-pill { background: white; color: var(--hachi-blue); padding: 8px 16px; border-radius: 25px; font-weight: 900; font-size: 1rem; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px; }
@@ -113,7 +108,10 @@
         .hero-period { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); background: var(--hachi-dark-blue); color: white; padding: 8px 25px; border-radius: 35px; font-weight: 900; border: 4px solid white; box-shadow: 0 5px 10px rgba(92, 168, 208, 0.2); font-size: 1.2rem; white-space: nowrap; z-index: 2; }
         
         .hero-temp-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 30px 0 20px 0; }
-        .hero-icon { font-size: 7rem; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.05)); animation: bounce 3s infinite; }
+        
+        /* 修正：將 Emoji 大小調整為 6rem，避免過大被裁切 */
+        .hero-icon { font-size: 6rem; line-height: 1; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.05)); animation: bounce 3s infinite; }
+        
         .hero-temp { font-size: 5rem; font-weight: 900; color: var(--hachi-blue); line-height: 1; text-shadow: 4px 4px 0 white; }
         .nantoka-badge { display: inline-block; background: #FFD700; color: #8B4513; font-weight: 900; font-size: 1.1rem; padding: 8px 20px; border-radius: 25px; transform: rotate(-3deg); margin-bottom: 15px; border: 3px solid white; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
         .hero-desc { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 20px; }
@@ -143,9 +141,11 @@
         .featured-left { text-align: left; z-index: 1; }
         .featured-title { font-weight: 900; font-size: 1.3rem; color: var(--hachi-blue); margin-bottom: 5px; }
         .featured-temp { font-size: 2.8rem; font-weight: 900; color: var(--text-brown); }
+        
+        /* 修正：使用 Emoji */
         .featured-icon { font-size: 4.5rem; z-index: 1; animation: gentle-swing 4s ease-in-out infinite; }
 
-        /* === 橫向滑動區 (修正版面裁切問題) === */
+        /* === 橫向滑動區 === */
         .scroll-container { 
             display: flex; 
             overflow-x: auto; 
@@ -153,13 +153,12 @@
             padding-top: 20px;
             padding-bottom: 25px; 
             padding-left: 15px; 
-            padding-right: 20px; /* 增加右側內距，解決最後一張卡片被裁切 */
+            padding-right: 20px; 
             scrollbar-width: none; 
         }
         .scroll-container::-webkit-scrollbar { display: none; }
         
         .mini-card { min-width: 135px; background: white; border-radius: 25px; padding: 18px; text-align: center; border: 4px solid white; box-shadow: 3px 3px 10px rgba(0,0,0,0.08); flex-shrink: 0; position: relative; }
-        /* 這些是凸出的耳朵，因為 top: -12px，所以容器上方需要留白 */
         .mini-card::after { content: ''; position: absolute; top: -12px; right: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         .mini-card::before { content: ''; position: absolute; top: -12px; left: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         
@@ -339,6 +338,7 @@
             const period = getTimePeriod(current.startTime);
             const avgTemp = Math.round((parseInt(current.maxTemp) + parseInt(current.minTemp)) / 2);
 
+            // 修正：主卡片使用 getWeatherIcon 顯示 Emoji
             document.getElementById('heroCard').innerHTML = `
                 <div class="hero-card">
                     <div class="hero-period">${period}</div>
@@ -376,6 +376,7 @@
             if (tomorrowNoonForecast) {
                 const tAvgTemp = Math.round((parseInt(tomorrowNoonForecast.maxTemp) + parseInt(tomorrowNoonForecast.minTemp)) / 2);
                 document.getElementById('tomorrowNoonSection').style.display = 'block';
+                // 修正：明天中午卡片使用 getWeatherIcon 顯示 Emoji
                 document.getElementById('tomorrowNoonCardContainer').innerHTML = `
                     <div class="featured-card">
                         <div class="featured-left">
