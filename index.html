@@ -72,9 +72,18 @@
             background-size: 100% 220px; background-repeat: no-repeat;
             filter: drop-shadow(0 4px 5px rgba(137, 207, 240, 0.3)); z-index: 0;
         }
-        .hachi-head-bg::before, .hachi-head-bg::after { content: ''; position: absolute; top: -30px; width: 50px; height: 60px; background: var(--hachi-blue); border: 5px solid white; border-radius: 30px 30px 0 0; }
-        .hachi-head-bg::before { left: 15%; transform: rotate(-15deg); }
-        .hachi-head-bg::after { right: 15%; transform: rotate(15deg); }
+        .hachi-head-bg::before, .hachi-head-bg::after { 
+            content: ''; 
+            position: absolute; 
+            top: 50%; /* 修改為置中 */
+            width: 50px; 
+            height: 60px; 
+            background: var(--hachi-blue); 
+            border: 5px solid white; 
+            border-radius: 30px 30px 0 0; 
+        }
+        .hachi-head-bg::before { left: 15%; transform: translateY(-50%) rotate(-15deg); /* 增加垂直置中 */ }
+        .hachi-head-bg::after { right: 15%; transform: translateY(-50%) rotate(15deg); /* 增加垂直置中 */ }
 
         .status-bar-content { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: flex-start; padding: 20px 25px; height: 100%; pointer-events: auto; }
         .location-pill, .update-pill { background: white; color: var(--hachi-blue); padding: 8px 16px; border-radius: 25px; font-weight: 900; font-size: 1rem; border: 3px solid white; box-shadow: 0 4px 8px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 6px; }
@@ -141,11 +150,10 @@
             display: flex; 
             overflow-x: auto; 
             gap: 15px; 
-            /* 關鍵修正：增加 padding-top 讓耳朵不被切掉，增加左右 padding 讓陰影完整 */
             padding-top: 20px;
             padding-bottom: 25px; 
             padding-left: 15px; 
-            padding-right: 15px; 
+            padding-right: 20px; /* 增加右側內距，解決最後一張卡片被裁切 */
             scrollbar-width: none; 
         }
         .scroll-container::-webkit-scrollbar { display: none; }
