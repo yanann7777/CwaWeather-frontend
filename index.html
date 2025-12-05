@@ -5,7 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hachiware報氣象</title>
+    
     <link rel="icon" type="image/png" href="./icon-v2.png">
+    <link rel="apple-touch-icon" href="./icon-v2.png">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap"
@@ -108,17 +111,14 @@
         .featured-temp { font-size: 2.8rem; font-weight: 900; color: var(--text-brown); }
         .featured-image { width: 90px; height: 90px; z-index: 1; animation: gentle-swing 4s ease-in-out infinite; }
 
-        /* === 橫向滑動區 (恢復 Emoji 樣式) === */
+        /* === 橫向滑動區 === */
         .scroll-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scrollbar-width: none; }
         .scroll-container::-webkit-scrollbar { display: none; }
         .mini-card { min-width: 135px; background: white; border-radius: 25px; padding: 18px; text-align: center; border: 4px solid white; box-shadow: 3px 3px 10px rgba(0,0,0,0.08); flex-shrink: 0; position: relative; }
         .mini-card::after { content: ''; position: absolute; top: -12px; right: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         .mini-card::before { content: ''; position: absolute; top: -12px; left: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         .mini-time { background: var(--hachi-blue); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; display: inline-block; margin-bottom: 10px; font-weight: bold; }
-        
-        /* 這裡改回使用 font-size 控制 Emoji */
         .mini-icon { font-size: 2.5rem; margin: 8px 0; }
-        
         .mini-temp { font-size: 1.3rem; font-weight: 800; color: var(--text-brown); }
 
         /* === Loading 畫面 === */
@@ -169,8 +169,7 @@
         </div>
 
         <h3 class="section-title">稍後預報</h3>
-        <div class="scroll-container" id="futureForecasts">
-            </div>
+        <div class="scroll-container" id="futureForecasts"></div>
         
         <div class="catchphrase-section">
             <div class="catchphrase-tag">小八口頭禪</div>
@@ -193,13 +192,17 @@
         // ========= 圖片連結設定區 =========
         // ========================================================================
         const IMAGE_CONFIG = {
-            // 介面圖片
-            loadingImage: "https://instagram.fkhh1-1.fna.fbcdn.net/v/t51.29350-15/453473469_1019861015998554_1700705000328781444_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InRocmVhZHMuQ0FST1VTRUxfSVRFTS5pbWFnZV91cmxnZW4uMTI3NHgxMjU4LnNkci5mMjkzNTAuZGVmYXVsdF9pbWFnZS5jMiJ9&_nc_ht=instagram.fkhh1-1.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QEk5bgGd-PeLe3R-m9YsLOzmMnkRwaq5EKVnL-cGmGqRHjYpnlb7rfkGvKdOtFRTPs&_nc_ohc=tDndMJxUqCYQ7kNvwFw0WQy&_nc_gid=o_fhgd7V7BDaLlBpI5HuRA&edm=AKr904kBAAAA&ccb=7-5&ig_cache_key=MzQyNDAxNzgyNTA5MDgxODY2OA%3D%3D.3-ccb7-5&oh=00_Afk-XVw4ZEVlZt0DXiSZKm14AlBkZerTZOmHVpDVJQeDXQ&oe=693814CC&_nc_sid=23467ftext=Hachi+Loading",
-            headerIcon: "https://cdn.shopify.com/s/files/1/0513/6636/3293/files/2hachiwarejpg_480x480.png?v=1726085086text=📷",
-            catchphraseImage: "https://media.nownews.com/nn_media/thumbnail/2025/02/1738651753307-ff47e102ef254289bf04ae2da943ea34-800x450.webp?unShow=falsetext=Hachi+?",
+            // 1. 新增：網頁圖示 (Favicon) 設定
+            // 請在這裡填入您想要顯示在瀏覽器分頁標籤上的小圖示連結
+            websiteIcon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEChDwA33YQZluOvHuXnABZ0bTg30Ua7P06Q&s", 
+
+            // 2. 介面圖片 (已修正連結格式)
+            loadingImage: "https://instagram.fkhh1-1.fna.fbcdn.net/v/t51.29350-15/453473469_1019861015998554_1700705000328781444_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InRocmVhZHMuQ0FST1VTRUxfSVRFTS5pbWFnZV91cmxnZW4uMTI3NHgxMjU4LnNkci5mMjkzNTAuZGVmYXVsdF9pbWFnZS5jMiJ9&_nc_ht=instagram.fkhh1-1.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QEk5bgGd-PeLe3R-m9YsLOzmMnkRwaq5EKVnL-cGmGqRHjYpnlb7rfkGvKdOtFRTPs&_nc_ohc=tDndMJxUqCYQ7kNvwFw0WQy&_nc_gid=o_fhgd7V7BDaLlBpI5HuRA&edm=AKr904kBAAAA&ccb=7-5&ig_cache_key=MzQyNDAxNzgyNTA5MDgxODY2OA%3D%3D.3-ccb7-5&oh=00_Afk-XVw4ZEVlZt0DXiSZKm14AlBkZerTZOmHVpDVJQeDXQ&oe=693814CC&_nc_sid=23467f",
+            headerIcon: "https://cdn.shopify.com/s/files/1/0513/6636/3293/files/2hachiwarejpg_480x480.png?v=1726085086",
+            catchphraseImage: "https://media.nownews.com/nn_media/thumbnail/2025/02/1738651753307-ff47e102ef254289bf04ae2da943ea34-800x450.webp?unShow=false",
             footerTailImage: "https://placehold.co/60x60/transparent/89CFF0?text=Tail",
 
-            // 天氣圖片 (用於主卡片和明天中午，稍後預報現在不使用這些)
+            // 3. 天氣圖片
             weather: {
                 "sunny": "https://placehold.co/150x150/transparent/FFD700?text=☀️",
                 "cloudy": "https://placehold.co/150x150/transparent/89CFF0?text=☁️",
@@ -213,13 +216,21 @@
         // ========================================================================
 
         document.addEventListener("DOMContentLoaded", () => {
+            // 更新一般圖片
             document.getElementById('loadingImg').src = IMAGE_CONFIG.loadingImage;
             document.getElementById('headerIconImg').src = IMAGE_CONFIG.headerIcon;
             document.getElementById('catchphraseImg').src = IMAGE_CONFIG.catchphraseImage;
             document.getElementById('footerTailImg').src = IMAGE_CONFIG.footerTailImage;
+
+            // 更新網頁圖示 (Favicon)
+            if (IMAGE_CONFIG.websiteIcon) {
+                let links = document.querySelectorAll("link[rel*='icon']");
+                links.forEach(link => {
+                    link.href = IMAGE_CONFIG.websiteIcon;
+                });
+            }
         });
 
-        // 測試資料
         const TEST_DATA = {
             "success": true,
             "data": {
@@ -235,7 +246,6 @@
             }
         };
 
-        // 恢復這個函數，用於顯示 Emoji
         function getWeatherIcon(weather) {
             if (!weather) return "🌤️";
             if (weather.includes("晴")) return "☀️";
@@ -246,7 +256,6 @@
             return "🌤️";
         }
 
-        // 用於顯示圖片
         function getWeatherImage(weather) {
             if (!weather) return IMAGE_CONFIG.weather.default;
             if (weather.includes("晴") && weather.includes("多雲")) return IMAGE_CONFIG.weather.partly;
@@ -343,7 +352,6 @@
             scrollContainer.innerHTML = '';
             const todayDateNum = now.getDate();
 
-            // 橫向滑動區：改回顯示 Emoji
             others.forEach(f => {
                 let p = getTimePeriod(f.startTime);
                 const fDate = new Date(f.startTime);
