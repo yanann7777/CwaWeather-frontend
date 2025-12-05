@@ -49,26 +49,26 @@
             padding-bottom: 40px;
         }
         
-        /* 背景遮罩，讓肉球圖案變淡 */
+        /* 背景遮罩 */
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 249, 229, 0.94); z-index: -1; }
         
         img { display: block; object-fit: contain; }
 
-        /* === Header === */
+        /* === Header (RWD修正) === */
         .status-bar-container { 
             position: sticky; 
             top: 0; 
             z-index: 100; 
             height: 120px; 
             pointer-events: none; 
-            width: 100%; /* 確保寬度滿版 */
-            max-width: 600px; /* 限制最大寬度跟內容一樣 */
+            width: 100%; 
+            max-width: 600px; /* 限制最大寬度，避免在電腦上變形 */
             margin: 0 auto; /* 置中 */
         }
         
-        /* Header 背景 (藍色頭頂) */
         .hachi-head-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            /* 調整圓弧比例，確保不被裁切 */
             background-image: 
                 radial-gradient(circle at 30% -40%, var(--hachi-blue) 0%, var(--hachi-blue) 55%, transparent 56%),
                 radial-gradient(circle at 70% -40%, var(--hachi-blue) 0%, var(--hachi-blue) 55%, transparent 56%);
@@ -87,10 +87,9 @@
         /* === 主要內容容器 (RWD 核心) === */
         .container { 
             padding: 20px; 
-            /* 手機板佔滿，但最大不超過 600px，在電腦上看會像一個 App 置中 */
             width: 100%;
-            max-width: 600px; 
-            margin: 0 auto; /* 水平置中 */
+            max-width: 600px; /* 限制內容寬度 */
+            margin: 0 auto;   /* 讓內容在電腦版置中 */
             margin-top: 10px; 
             position: relative; 
             z-index: 10; 
@@ -108,6 +107,7 @@
         .hero-period { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); background: var(--hachi-dark-blue); color: white; padding: 8px 25px; border-radius: 35px; font-weight: 900; border: 4px solid white; box-shadow: 0 5px 10px rgba(92, 168, 208, 0.2); font-size: 1.2rem; white-space: nowrap; z-index: 2; }
         
         .hero-temp-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 30px 0 20px 0; }
+        /* Emoji 字體大小 */
         .hero-icon { font-size: 7rem; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.05)); animation: bounce 3s infinite; }
         .hero-temp { font-size: 5rem; font-weight: 900; color: var(--hachi-blue); line-height: 1; text-shadow: 4px 4px 0 white; }
         .nantoka-badge { display: inline-block; background: #FFD700; color: #8B4513; font-weight: 900; font-size: 1.1rem; padding: 8px 20px; border-radius: 25px; transform: rotate(-3deg); margin-bottom: 15px; border: 3px solid white; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
@@ -140,8 +140,8 @@
         .featured-temp { font-size: 2.8rem; font-weight: 900; color: var(--text-brown); }
         .featured-icon { font-size: 4.5rem; z-index: 1; animation: gentle-swing 4s ease-in-out infinite; }
 
-        /* === 橫向滑動區 === */
-        .scroll-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 20px; scrollbar-width: none; }
+        /* === 橫向滑動區 (增加 padding 防止陰影被切) === */
+        .scroll-container { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 25px; padding-left: 5px; padding-right: 5px; scrollbar-width: none; }
         .scroll-container::-webkit-scrollbar { display: none; }
         .mini-card { min-width: 135px; background: white; border-radius: 25px; padding: 18px; text-align: center; border: 4px solid white; box-shadow: 3px 3px 10px rgba(0,0,0,0.08); flex-shrink: 0; position: relative; }
         .mini-card::after { content: ''; position: absolute; top: -12px; right: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
@@ -150,7 +150,7 @@
         .mini-icon { font-size: 2.5rem; margin: 8px 0; }
         .mini-temp { font-size: 1.3rem; font-weight: 800; color: var(--text-brown); }
 
-        /* === Loading 畫面 (優化版) === */
+        /* === Loading 畫面 (修正置中與新增讀取條) === */
         .loading-screen { 
             position: fixed; 
             top: 0; left: 0; right: 0; bottom: 0; 
@@ -159,20 +159,16 @@
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
-            z-index: 9999; /* 確保在最上層 */
-            padding: 20px;
+            z-index: 9999; 
+            padding: 20px; /* 增加內距，防止小螢幕被切 */
         }
         
         .loading-image-container { 
-            width: 150px; 
-            height: 150px; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
+            width: 150px; height: 150px; 
+            display: flex; justify-content: center; align-items: center; 
             animation: bounce 1s infinite; 
-            margin-bottom: 20px; /* 增加與文字的間距 */
+            margin-bottom: 20px; /* 增加間距 */
         }
-        
         .loading-image { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
         
         .loading-text { 
@@ -182,41 +178,41 @@
             letter-spacing: 2px; 
             text-shadow: 2px 2px 0 rgba(0,0,0,0.1); 
             text-align: center; /* 確保文字置中 */
-            margin-bottom: 25px; /* 與進度條的間距 */
+            margin-bottom: 30px; /* 留空間給讀取條 */
         }
 
-        /* === 新增：讀取條樣式 === */
+        /* === 讀取條樣式 === */
         .loading-progress-container {
             width: 100%;
-            max-width: 300px;
-            height: 12px;
+            max-width: 280px; /* 限制寬度避免太長 */
+            height: 14px;
             background: rgba(255, 255, 255, 0.4);
             border-radius: 20px;
-            border: 2px solid white;
+            border: 3px solid white;
             position: relative;
-            overflow: visible; /* 為了讓小八跑出邊界 */
+            overflow: visible; /* 關鍵：讓跑步的小八可以凸出去 */
         }
 
         .loading-progress-bar {
-            width: 0%; /* JS 會控制這裡 */
+            width: 0%;
             height: 100%;
-            background: #FFD700; /* 黃色進度條 */
+            background: #FFD700; /* 吉伊卡哇黃色 */
             border-radius: 20px;
             position: relative;
             transition: width 0.1s linear;
         }
 
-        /* 在進度條上跑的小八 */
+        /* 讀取條上的小人 */
         .loading-runner {
             position: absolute;
-            right: -25px; /* 調整位置，讓它看起來在前端跑 */
-            top: -35px;
+            right: -25px; /* 調整這個值確保對齊 */
+            top: -38px;
             width: 50px;
             height: 50px;
             object-fit: contain;
-            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+            filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.1));
             z-index: 10;
-            animation: gentle-shake 0.5s infinite; /* 跑步時晃動 */
+            animation: gentle-shake 0.3s infinite; /* 跑步晃動 */
         }
 
         .footer-tail-container { margin-top: 30px; text-align: center; }
@@ -225,7 +221,7 @@
         @keyframes tail-wag { from { transform: rotate(-10deg); } to { transform: rotate(10deg); } }
         @keyframes gentle-swing { 0%, 100% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } }
         @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-        @keyframes gentle-shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-5deg); } 75% { transform: rotate(5deg); } }
+        @keyframes gentle-shake { 0%, 100% { transform: rotate(0deg); } 25% { transform: rotate(-10deg); } 75% { transform: rotate(10deg); } }
 
     </style>
 </head>
@@ -239,7 +235,7 @@
         
         <div class="loading-progress-container">
             <div id="progressBar" class="loading-progress-bar">
-                <img id="runnerImg" src="" alt="runner" class="loading-runner">
+                <img id="runnerImg" src="" alt="running" class="loading-runner">
             </div>
         </div>
     </div>
@@ -291,29 +287,21 @@
         // ========= 圖片連結設定區 =========
         // ========================================================================
         const IMAGE_CONFIG = {
-            // 1. 網頁圖示 (Favicon)
-            websiteIcon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvRmTGxkKFJ9J1qF_yzps2zzKlyMEqw0r8asgfkgQpkQ&s", 
-
-            // 2. 介面圖片
+            websiteIcon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvRmTGxkKFJ9J1qF_yzps2zzKlyMEqw0r8asgfkgQpkQ&s",
             loadingImage: "https://today-obs.line-scdn.net/0hRPFCg9YSDX97OhyjMFJyKENsAQ5IXBd2WVxBGlc-AxsFFkkvFAteHFdtUFMGDx0vWwkQTVxoU0xQWBorFw/w1200",
             headerIcon: "https://cdn.shopify.com/s/files/1/0513/6636/3293/files/2hachiwarejpg_480x480.png?v=1726085086",
             catchphraseImage: "https://media.nownews.com/nn_media/thumbnail/2025/02/1738651753307-ff47e102ef254289bf04ae2da943ea34-800x450.webp?unShow=false",
             footerTailImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEChDwA33YQZluOvHuXnABZ0bTg30Ua7P06Q&s"
         };
 
-        // ========================================================================
-
         document.addEventListener("DOMContentLoaded", () => {
-            // 更新一般圖片
             document.getElementById('loadingImg').src = IMAGE_CONFIG.loadingImage;
             document.getElementById('headerIconImg').src = IMAGE_CONFIG.headerIcon;
             document.getElementById('catchphraseImg').src = IMAGE_CONFIG.catchphraseImage;
             document.getElementById('footerTailImg').src = IMAGE_CONFIG.footerTailImage;
-            
-            // 讀取條上的小人也使用 Header 的相機小圖 (或您可以指定其他圖)
+            // 讀取條上的小人也使用 Header 的相機小圖
             document.getElementById('runnerImg').src = IMAGE_CONFIG.headerIcon;
 
-            // 更新網頁圖示 (Favicon)
             if (IMAGE_CONFIG.websiteIcon) {
                 let links = document.querySelectorAll("link[rel*='icon']");
                 links.forEach(link => { link.href = IMAGE_CONFIG.websiteIcon; });
@@ -346,11 +334,9 @@
         }
 
         function getAdvice(rainProb, maxTemp) {
-            let rainIcon = "🌂";
-            let rainText = "直接出門啦"; 
+            let rainIcon = "🌂"; let rainText = "直接出門啦"; 
             if (parseInt(rainProb) > 30) { rainIcon = "☂️"; rainText = "記得帶傘！"; }
-            let clothIcon = "👕";
-            let clothText = "舒適穿搭";
+            let clothIcon = "👕"; let clothText = "舒適穿搭";
             if (parseInt(maxTemp) >= 28) { clothIcon = "🎽"; clothText = "短袖出發"; } 
             else if (parseInt(maxTemp) <= 20) { clothIcon = "🧣"; clothText = "加件外套"; }
             return { rainIcon, rainText, clothIcon, clothText };
@@ -358,10 +344,8 @@
 
         function getTimePeriod(startTime) {
             const hour = new Date(startTime).getHours();
-            if (hour >= 5 && hour < 11) return "早晨";
-            if (hour >= 11 && hour < 14) return "中午";
-            if (hour >= 14 && hour < 18) return "下午";
-            if (hour >= 18 && hour < 23) return "晚上";
+            if (hour >= 5 && hour < 11) return "早晨"; if (hour >= 11 && hour < 14) return "中午";
+            if (hour >= 14 && hour < 18) return "下午"; if (hour >= 18 && hour < 23) return "晚上";
             return "深夜";
         }
 
@@ -369,35 +353,32 @@
             const forecasts = data.forecasts;
             const current = forecasts[0];
             const others = forecasts.slice(1);
-
             const advice = getAdvice(current.rain, current.maxTemp);
             const period = getTimePeriod(current.startTime);
             const avgTemp = Math.round((parseInt(current.maxTemp) + parseInt(current.minTemp)) / 2);
 
             document.getElementById('heroCard').innerHTML = `
-                        <div class="hero-card">
-                            <div class="hero-period">${period}</div>
-                            <div class="hero-temp-container">
-                                <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
-                                <div class="hero-temp">${avgTemp}°</div>
-                            </div>
-                            <div class="nantoka-badge">なんとかなれー！</div>
-                            <div class="hero-desc">${current.weather}</div>
-                            
-                            <div class="advice-grid">
-                                <div class="advice-item">
-                                    <div class="advice-icon">${advice.rainIcon}</div>
-                                    <div class="advice-text">${advice.rainText}</div>
-                                    <div style="font-size:0.9rem; color:#AFA098">降雨率 ${current.rain}</div>
-                                </div>
-                                <div class="advice-item">
-                                    <div class="advice-icon">${advice.clothIcon}</div>
-                                    <div class="advice-text">${advice.clothText}</div>
-                                    <div style="font-size:0.9rem; color:#AFA098">最高溫 ${current.maxTemp}°</div>
-                                </div>
-                            </div>
+                <div class="hero-card">
+                    <div class="hero-period">${period}</div>
+                    <div class="hero-temp-container">
+                        <div class="hero-icon">${getWeatherIcon(current.weather)}</div>
+                        <div class="hero-temp">${avgTemp}°</div>
+                    </div>
+                    <div class="nantoka-badge">なんとかなれー！</div>
+                    <div class="hero-desc">${current.weather}</div>
+                    <div class="advice-grid">
+                        <div class="advice-item">
+                            <div class="advice-icon">${advice.rainIcon}</div>
+                            <div class="advice-text">${advice.rainText}</div>
+                            <div style="font-size:0.9rem; color:#AFA098">降雨率 ${current.rain}</div>
                         </div>
-                    `;
+                        <div class="advice-item">
+                            <div class="advice-icon">${advice.clothIcon}</div>
+                            <div class="advice-text">${advice.clothText}</div>
+                            <div style="font-size:0.9rem; color:#AFA098">最高溫 ${current.maxTemp}°</div>
+                        </div>
+                    </div>
+                </div>`;
 
             const now = new Date();
             const tomorrow = new Date(now);
@@ -421,8 +402,7 @@
                             <div class="featured-temp">${tAvgTemp}°C</div>
                         </div>
                         <div class="featured-icon">${getWeatherIcon(tomorrowNoonForecast.weather)}</div>
-                    </div>
-                `;
+                    </div>`;
             } else {
                 document.getElementById('tomorrowNoonSection').style.display = 'none';
             }
@@ -435,15 +415,13 @@
                 let p = getTimePeriod(f.startTime);
                 const fDate = new Date(f.startTime);
                 if (fDate.getDate() !== todayDateNum) { p = "明天" + p; }
-
                 scrollContainer.innerHTML += `
-                            <div class="mini-card">
-                                <div class="mini-time">${p}</div>
-                                <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
-                                <div class="mini-temp">${f.minTemp}° - ${f.maxTemp}°</div>
-                                <div style="font-size:0.9rem; color:#9E8A7E; margin-top:5px; font-weight:bold;">💧${f.rain}</div>
-                            </div>
-                        `;
+                    <div class="mini-card">
+                        <div class="mini-time">${p}</div>
+                        <div class="mini-icon">${getWeatherIcon(f.weather)}</div>
+                        <div class="mini-temp">${f.minTemp}° - ${f.maxTemp}°</div>
+                        <div style="font-size:0.9rem; color:#9E8A7E; margin-top:5px; font-weight:bold;">💧${f.rain}</div>
+                    </div>`;
             });
 
             const month = now.getMonth() + 1;
@@ -455,28 +433,25 @@
 
         async function fetchWeather() {
             try {
-                // 模擬讀取時間 (3秒)
-                const loadingTime = 3000;
-                
-                // 開始跑讀取條動畫
+                // 1. 啟動進度條動畫
+                const loadingTime = 3000; // 假裝讀取 3 秒
                 const progressBar = document.getElementById('progressBar');
                 let width = 0;
-                const intervalTime = 30; // 每 30ms 更新一次
-                const step = 100 / (loadingTime / intervalTime); // 計算每次增加的 % 數
+                const intervalTime = 30; 
+                const step = 100 / (loadingTime / intervalTime); 
                 
                 const progressInterval = setInterval(() => {
                     width += step;
-                    if (width >= 100) {
-                        width = 100;
-                        clearInterval(progressInterval);
-                    }
+                    if (width >= 100) { width = 100; clearInterval(progressInterval); }
                     progressBar.style.width = width + '%';
                 }, intervalTime);
 
+                // 2. 模擬等待資料
                 const delayPromise = new Promise(resolve => setTimeout(resolve, loadingTime)); 
                 const json = TEST_DATA; 
                 await delayPromise; 
                 
+                // 3. 資料載入完成
                 if (json.success) {
                     renderWeather(json.data);
                     document.getElementById('loading').style.display = 'none';
