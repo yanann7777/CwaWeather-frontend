@@ -26,8 +26,16 @@
             --card-border: #E8DCC8;
         }
 
-        /* === 通用設定 === */
+        /* === 通用設定 (RWD 基礎) === */
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        html, body {
+            width: 100%;
+            /* 防止左右滑動的關鍵 */
+            overflow-x: hidden; 
+            min-height: 100vh;
+        }
+
         body {
             font-family: 'Zen Maru Gothic', sans-serif;
             background-color: var(--hachi-cream);
@@ -37,18 +45,28 @@
             background-position: 0 0, 25px 25px;
             background-size: 50px 50px;
             position: relative;
-            min-height: 100vh;
             color: var(--text-brown);
-            overflow-x: hidden;
             padding-bottom: 40px;
         }
+        
+        /* 背景遮罩，讓肉球圖案變淡 */
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 249, 229, 0.94); z-index: -1; }
         
-        /* 圖片通用樣式 */
         img { display: block; object-fit: contain; }
 
         /* === Header === */
-        .status-bar-container { position: sticky; top: 0; z-index: 100; height: 120px; pointer-events: none; }
+        .status-bar-container { 
+            position: sticky; 
+            top: 0; 
+            z-index: 100; 
+            height: 120px; 
+            pointer-events: none; 
+            width: 100%; /* 確保寬度滿版 */
+            max-width: 600px; /* 限制最大寬度跟內容一樣 */
+            margin: 0 auto; /* 置中 */
+        }
+        
+        /* Header 背景 (藍色頭頂) */
         .hachi-head-bg {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background-image: 
@@ -66,7 +84,17 @@
         .location-pill { transform: rotate(-2deg); }
         .icon-small { width: 24px; height: 24px; }
 
-        .container { padding: 20px; max-width: 600px; margin: 0 auto; margin-top: 10px; position: relative; z-index: 10; }
+        /* === 主要內容容器 (RWD 核心) === */
+        .container { 
+            padding: 20px; 
+            /* 手機板佔滿，但最大不超過 600px，在電腦上看會像一個 App 置中 */
+            width: 100%;
+            max-width: 600px; 
+            margin: 0 auto; /* 水平置中 */
+            margin-top: 10px; 
+            position: relative; 
+            z-index: 10; 
+        }
 
         /* === 主卡片 === */
         .hachi-card-wrapper { position: relative; margin-bottom: 35px; }
@@ -80,10 +108,7 @@
         .hero-period { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); background: var(--hachi-dark-blue); color: white; padding: 8px 25px; border-radius: 35px; font-weight: 900; border: 4px solid white; box-shadow: 0 5px 10px rgba(92, 168, 208, 0.2); font-size: 1.2rem; white-space: nowrap; z-index: 2; }
         
         .hero-temp-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 30px 0 20px 0; }
-        
-        /* 恢復使用 Emoji 圖示字體樣式 */
         .hero-icon { font-size: 7rem; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.05)); animation: bounce 3s infinite; }
-        
         .hero-temp { font-size: 5rem; font-weight: 900; color: var(--hachi-blue); line-height: 1; text-shadow: 4px 4px 0 white; }
         .nantoka-badge { display: inline-block; background: #FFD700; color: #8B4513; font-weight: 900; font-size: 1.1rem; padding: 8px 20px; border-radius: 25px; transform: rotate(-3deg); margin-bottom: 15px; border: 3px solid white; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
         .hero-desc { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 20px; }
@@ -113,8 +138,6 @@
         .featured-left { text-align: left; z-index: 1; }
         .featured-title { font-weight: 900; font-size: 1.3rem; color: var(--hachi-blue); margin-bottom: 5px; }
         .featured-temp { font-size: 2.8rem; font-weight: 900; color: var(--text-brown); }
-        
-        /* 恢復使用 Emoji 圖示字體樣式 */
         .featured-icon { font-size: 4.5rem; z-index: 1; animation: gentle-swing 4s ease-in-out infinite; }
 
         /* === 橫向滑動區 === */
@@ -124,17 +147,78 @@
         .mini-card::after { content: ''; position: absolute; top: -12px; right: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         .mini-card::before { content: ''; position: absolute; top: -12px; left: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         .mini-time { background: var(--hachi-blue); color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.85rem; display: inline-block; margin-bottom: 10px; font-weight: bold; }
-        
-        /* 恢復使用 Emoji 圖示字體樣式 */
         .mini-icon { font-size: 2.5rem; margin: 8px 0; }
-        
         .mini-temp { font-size: 1.3rem; font-weight: 800; color: var(--text-brown); }
 
-        /* === Loading 畫面 === */
-        .loading-screen { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: var(--hachi-blue); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 999; }
-        .loading-image-container { width: 150px; height: 150px; display: flex; justify-content: center; align-items: center; animation: bounce 1s infinite; }
+        /* === Loading 畫面 (優化版) === */
+        .loading-screen { 
+            position: fixed; 
+            top: 0; left: 0; right: 0; bottom: 0; 
+            background: var(--hachi-blue); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            z-index: 9999; /* 確保在最上層 */
+            padding: 20px;
+        }
+        
+        .loading-image-container { 
+            width: 150px; 
+            height: 150px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            animation: bounce 1s infinite; 
+            margin-bottom: 20px; /* 增加與文字的間距 */
+        }
+        
         .loading-image { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1)); }
-        .loading-text { color: white; font-weight: 900; margin-top: 30px; font-size: 1.5rem; letter-spacing: 2px; text-shadow: 2px 2px 0 rgba(0,0,0,0.1); }
+        
+        .loading-text { 
+            color: white; 
+            font-weight: 900; 
+            font-size: 1.5rem; 
+            letter-spacing: 2px; 
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.1); 
+            text-align: center; /* 確保文字置中 */
+            margin-bottom: 25px; /* 與進度條的間距 */
+        }
+
+        /* === 新增：讀取條樣式 === */
+        .loading-progress-container {
+            width: 100%;
+            max-width: 300px;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            border: 2px solid white;
+            position: relative;
+            overflow: visible; /* 為了讓小八跑出邊界 */
+        }
+
+        .loading-progress-bar {
+            width: 0%; /* JS 會控制這裡 */
+            height: 100%;
+            background: #FFD700; /* 黃色進度條 */
+            border-radius: 20px;
+            position: relative;
+            transition: width 0.1s linear;
+        }
+
+        /* 在進度條上跑的小八 */
+        .loading-runner {
+            position: absolute;
+            right: -25px; /* 調整位置，讓它看起來在前端跑 */
+            top: -35px;
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2));
+            z-index: 10;
+            animation: gentle-shake 0.5s infinite; /* 跑步時晃動 */
+        }
+
         .footer-tail-container { margin-top: 30px; text-align: center; }
         .footer-tail-image { width: 50px; height: auto; margin: 0 auto; animation: tail-wag 1s ease-in-out infinite alternate; }
         
@@ -152,6 +236,12 @@
             <img id="loadingImg" src="" alt="Loading" class="loading-image">
         </div>
         <p class="loading-text">なんとかなれー！<br><span style="font-size:1rem; opacity:0.8">(總會有辦法的!)</span></p>
+        
+        <div class="loading-progress-container">
+            <div id="progressBar" class="loading-progress-bar">
+                <img id="runnerImg" src="" alt="runner" class="loading-runner">
+            </div>
+        </div>
     </div>
     
     <div class="status-bar-container">
@@ -198,14 +288,14 @@
 
     <script>
         // ========================================================================
-        // ========= 圖片連結設定區 (已幫您修正連結錯誤) =========
+        // ========= 圖片連結設定區 =========
         // ========================================================================
         const IMAGE_CONFIG = {
             // 1. 網頁圖示 (Favicon)
             websiteIcon: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvRmTGxkKFJ9J1qF_yzps2zzKlyMEqw0r8asgfkgQpkQ&s", 
 
-            // 2. 介面圖片 (已清理多餘的 text=... 亂碼)
-            loadingImage: "https://today-obs.line-scdn.net/0hRPFCg9YSDX97OhyjMFJyKENsAQ5IXBd2WVxBGlc-AxsFFkkvFAteHFdtUFMGDx0vWwkQTVxoU0xQWBorFw/w1200",
+            // 2. 介面圖片
+            loadingImage: "https://instagram.fkhh1-1.fna.fbcdn.net/v/t51.29350-15/453473469_1019861015998554_1700705000328781444_n.jpg?stp=dst-jpg_e35_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InRocmVhZHMuQ0FST1VTRUxfSVRFTS5pbWFnZV91cmxnZW4uMTI3NHgxMjU4LnNkci5mMjkzNTAuZGVmYXVsdF9pbWFnZS5jMiJ9&_nc_ht=instagram.fkhh1-1.fna.fbcdn.net&_nc_cat=106&_nc_oc=Q6cZ2QEk5bgGd-PeLe3R-m9YsLOzmMnkRwaq5EKVnL-cGmGqRHjYpnlb7rfkGvKdOtFRTPs&_nc_ohc=tDndMJxUqCYQ7kNvwFw0WQy&_nc_gid=o_fhgd7V7BDaLlBpI5HuRA&edm=AKr904kBAAAA&ccb=7-5&ig_cache_key=MzQyNDAxNzgyNTA5MDgxODY2OA%3D%3D.3-ccb7-5&oh=00_Afk-XVw4ZEVlZt0DXiSZKm14AlBkZerTZOmHVpDVJQeDXQ&oe=693814CC&_nc_sid=23467f",
             headerIcon: "https://cdn.shopify.com/s/files/1/0513/6636/3293/files/2hachiwarejpg_480x480.png?v=1726085086",
             catchphraseImage: "https://media.nownews.com/nn_media/thumbnail/2025/02/1738651753307-ff47e102ef254289bf04ae2da943ea34-800x450.webp?unShow=false",
             footerTailImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEChDwA33YQZluOvHuXnABZ0bTg30Ua7P06Q&s"
@@ -219,6 +309,9 @@
             document.getElementById('headerIconImg').src = IMAGE_CONFIG.headerIcon;
             document.getElementById('catchphraseImg').src = IMAGE_CONFIG.catchphraseImage;
             document.getElementById('footerTailImg').src = IMAGE_CONFIG.footerTailImage;
+            
+            // 讀取條上的小人也使用 Header 的相機小圖 (或您可以指定其他圖)
+            document.getElementById('runnerImg').src = IMAGE_CONFIG.headerIcon;
 
             // 更新網頁圖示 (Favicon)
             if (IMAGE_CONFIG.websiteIcon) {
@@ -281,7 +374,6 @@
             const period = getTimePeriod(current.startTime);
             const avgTemp = Math.round((parseInt(current.maxTemp) + parseInt(current.minTemp)) / 2);
 
-            // 修改：恢復顯示 Emoji 圖示 (使用 getWeatherIcon)
             document.getElementById('heroCard').innerHTML = `
                         <div class="hero-card">
                             <div class="hero-period">${period}</div>
@@ -318,7 +410,6 @@
                 return fDate.getDate() === tomorrowDateNum && (fHour >= 11 && fHour < 14);
             });
 
-            // 修改：恢復顯示 Emoji 圖示
             if (tomorrowNoonForecast) {
                 const tAvgTemp = Math.round((parseInt(tomorrowNoonForecast.maxTemp) + parseInt(tomorrowNoonForecast.minTemp)) / 2);
                 document.getElementById('tomorrowNoonSection').style.display = 'block';
@@ -364,9 +455,28 @@
 
         async function fetchWeather() {
             try {
-                const delayPromise = new Promise(resolve => setTimeout(resolve, 2000)); 
+                // 模擬讀取時間 (3秒)
+                const loadingTime = 3000;
+                
+                // 開始跑讀取條動畫
+                const progressBar = document.getElementById('progressBar');
+                let width = 0;
+                const intervalTime = 30; // 每 30ms 更新一次
+                const step = 100 / (loadingTime / intervalTime); // 計算每次增加的 % 數
+                
+                const progressInterval = setInterval(() => {
+                    width += step;
+                    if (width >= 100) {
+                        width = 100;
+                        clearInterval(progressInterval);
+                    }
+                    progressBar.style.width = width + '%';
+                }, intervalTime);
+
+                const delayPromise = new Promise(resolve => setTimeout(resolve, loadingTime)); 
                 const json = TEST_DATA; 
                 await delayPromise; 
+                
                 if (json.success) {
                     renderWeather(json.data);
                     document.getElementById('loading').style.display = 'none';
