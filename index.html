@@ -46,9 +46,7 @@
             position: relative;
             color: var(--text-brown);
             padding-bottom: 40px;
-            
-            /* 維持您覺得沒問題的頂部距離 */
-            padding-top: 40px; 
+            padding-top: 60px; 
         }
         
         body::before { content: ''; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 249, 229, 0.94); z-index: -1; }
@@ -65,7 +63,6 @@
             width: 100%; 
             max-width: 600px; 
             margin: 0 auto; 
-            /* 修正 header 位置 */
             margin-top: -20px;
         }
         
@@ -95,6 +92,8 @@
             margin-top: 10px; 
             position: relative; 
             z-index: 10; 
+            /* 確保容器 overflow 設定正確，不隱藏超出的陰影 */
+            overflow: visible;
         }
 
         /* === 主卡片 === */
@@ -109,7 +108,7 @@
         .hero-period { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); background: var(--hachi-dark-blue); color: white; padding: 8px 25px; border-radius: 35px; font-weight: 900; border: 4px solid white; box-shadow: 0 5px 10px rgba(92, 168, 208, 0.2); font-size: 1.2rem; white-space: nowrap; z-index: 2; }
         
         .hero-temp-container { display: flex; justify-content: center; align-items: center; gap: 15px; margin: 30px 0 20px 0; }
-        .hero-icon { font-size: 7rem; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.05)); animation: bounce 3s infinite; }
+        .hero-icon { font-size: 6rem; line-height: 1; filter: drop-shadow(2px 2px 0 rgba(0,0,0,0.05)); animation: bounce 3s infinite; }
         .hero-temp { font-size: 5rem; font-weight: 900; color: var(--hachi-blue); line-height: 1; text-shadow: 4px 4px 0 white; }
         .nantoka-badge { display: inline-block; background: #FFD700; color: #8B4513; font-weight: 900; font-size: 1.1rem; padding: 8px 20px; border-radius: 25px; transform: rotate(-3deg); margin-bottom: 15px; border: 3px solid white; box-shadow: 2px 2px 5px rgba(0,0,0,0.1); }
         .hero-desc { font-size: 1.8rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 20px; }
@@ -141,30 +140,39 @@
         .featured-temp { font-size: 2.8rem; font-weight: 900; color: var(--text-brown); }
         .featured-icon { font-size: 4.5rem; z-index: 1; animation: gentle-swing 4s ease-in-out infinite; }
 
-        /* === 橫向滑動區 (白色卡片裁切修正) === */
+        /* === 橫向滑動區 (終極修正版) === */
         .scroll-container { 
             display: flex; 
             overflow-x: auto; 
             gap: 15px; 
-            /* 1. 調整上下內距，確保陰影和突出的耳朵有空間顯示 */
-            padding-top: 25px;
-            padding-bottom: 30px; 
-            /* 2. 左右內距 */
-            padding-left: 15px; 
-            padding-right: 15px;
+            
+            /* 【核心修正 1】增加極大的上下內距，確保陰影和貓耳朵絕對有空間 */
+            padding-top: 35px;
+            padding-bottom: 40px; 
+            
+            /* 【核心修正 2】左右內距，讓內容看起來在中間 */
+            padding-left: 20px; 
+            padding-right: 20px;
+            
+            /* 【核心修正 3】負邊距技術 (Negative Margin) */
+            /* 讓這個容器「無視」父層的 padding，往左右擴張，這樣陰影就不會被父層的邊界切掉 */
+            margin-left: -20px;
+            margin-right: -20px;
+            
+            /* 讓捲動軸寬度略大於內容，配合負邊距 */
+            width: calc(100% + 40px);
             
             scrollbar-width: none; 
-            width: 100%;
-            box-sizing: border-box; /* 確保 padding 包含在寬度內 */
+            box-sizing: border-box;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
         
-        /* 3. 【關鍵修正】使用偽元素強制在最後撐出空間，解決右側卡片被切掉的問題 */
+        /* 【核心修正 4】強制撐開最後一個元素的空間 */
         .scroll-container::after {
             content: "";
             display: block;
-            min-width: 20px; /* 這裡的數值代表最後留白的寬度 */
-            height: 10px;    /* 撐開高度無所謂 */
+            min-width: 25px; /* 最後面的留白 */
+            height: 10px;
         }
         
         .mini-card { 
@@ -177,6 +185,9 @@
             box-shadow: 3px 3px 10px rgba(0,0,0,0.08); 
             flex-shrink: 0; 
             position: relative; 
+            
+            /* 確保卡片不會因為 flex 而被壓縮 */
+            flex: 0 0 auto;
         }
         
         /* 小卡片的耳朵 */
