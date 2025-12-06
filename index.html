@@ -4,11 +4,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    
     <title>Hachiware報氣象</title>
+    <meta name="description" content="なんとかなれー！(總會有辦法的!) Hachiware 為您播報天氣">
+    <meta name="theme-color" content="#FFF9E5"> <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvRmTGxkKFJ9J1qF_yzps2zzKlyMEqw0r8asgfkgQpkQ&s">
+    <link rel="apple-touch-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvRmTGxkKFJ9J1qF_yzps2zzKlyMEqw0r8asgfkgQpkQ&s">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Hachiware報氣象">
+    <meta property="og:description" content="なんとかなれー！(總會有辦法的!) Hachiware 為您播報天氣">
+    <meta property="og:url" content="https://yanann7777.github.io/CwaWeather-frontend/">
+    <meta property="og:site_name" content="Hachiware Weather">
     
-    <link rel="icon" type="image/png" href="./icon-v2.png">
-    <link rel="apple-touch-icon" href="./icon-v2.png">
-    
+    <meta property="og:image" content="https://yanann7777.github.io/CwaWeather-frontend/您的封面圖檔名.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Hachiware報氣象">
+    <meta name="twitter:description" content="なんとかなれー！(總會有辦法的!) Hachiware 為您播報天氣">
+    <meta name="twitter:image" content="https://yanann7777.github.io/CwaWeather-frontend/您的封面圖檔名.jpg">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;700;900&display=swap"
@@ -92,7 +108,6 @@
             margin-top: 10px; 
             position: relative; 
             z-index: 10; 
-            /* 確保容器 overflow 設定正確，不隱藏超出的陰影 */
             overflow: visible;
         }
 
@@ -140,38 +155,27 @@
         .featured-temp { font-size: 2.8rem; font-weight: 900; color: var(--text-brown); }
         .featured-icon { font-size: 4.5rem; z-index: 1; animation: gentle-swing 4s ease-in-out infinite; }
 
-        /* === 橫向滑動區 (終極修正版) === */
+        /* === 橫向滑動區 (偽元素修正版) === */
         .scroll-container { 
             display: flex; 
             overflow-x: auto; 
             gap: 15px; 
-            
-            /* 【核心修正 1】增加極大的上下內距，確保陰影和貓耳朵絕對有空間 */
             padding-top: 35px;
             padding-bottom: 40px; 
-            
-            /* 【核心修正 2】左右內距，讓內容看起來在中間 */
             padding-left: 20px; 
             padding-right: 20px;
-            
-            /* 【核心修正 3】負邊距技術 (Negative Margin) */
-            /* 讓這個容器「無視」父層的 padding，往左右擴張，這樣陰影就不會被父層的邊界切掉 */
             margin-left: -20px;
             margin-right: -20px;
-            
-            /* 讓捲動軸寬度略大於內容，配合負邊距 */
             width: calc(100% + 40px);
-            
             scrollbar-width: none; 
             box-sizing: border-box;
         }
         .scroll-container::-webkit-scrollbar { display: none; }
         
-        /* 【核心修正 4】強制撐開最後一個元素的空間 */
         .scroll-container::after {
             content: "";
             display: block;
-            min-width: 25px; /* 最後面的留白 */
+            min-width: 25px;
             height: 10px;
         }
         
@@ -185,12 +189,9 @@
             box-shadow: 3px 3px 10px rgba(0,0,0,0.08); 
             flex-shrink: 0; 
             position: relative; 
-            
-            /* 確保卡片不會因為 flex 而被壓縮 */
             flex: 0 0 auto;
         }
         
-        /* 小卡片的耳朵 */
         .mini-card::after { content: ''; position: absolute; top: -12px; right: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         .mini-card::before { content: ''; position: absolute; top: -12px; left: 15px; width: 22px; height: 22px; background: var(--hachi-blue); border-radius: 50%; z-index: -1; }
         
